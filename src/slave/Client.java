@@ -177,6 +177,7 @@ public class Client {
 
         @Override
         public void run() {
+            LOG.log(Level.INFO, this.getClass().getName() + " launched");
             long timeOfDelayRequest;
             byte[] buffer;
             DatagramPacket packet;
