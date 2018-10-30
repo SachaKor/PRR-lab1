@@ -178,7 +178,7 @@ public class Client {
         @Override
         public void run() {
             LOG.log(Level.INFO, this.getClass().getName() + " launched");
-            long timeOfDelayRequest;
+            long localTimeOfDelayRequest;
             byte[] buffer;
             DatagramPacket packet;
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -192,7 +192,7 @@ public class Client {
                     dataOutputStream.writeLong(delayId);
                     buffer = byteArrayOutputStream.toByteArray();
                     packet = new DatagramPacket(buffer, buffer.length, serverAddress, port);
-                    timeOfDelayRequest = System.currentTimeMillis();
+                    localTimeOfDelayRequest = System.currentTimeMillis() + gap + delay;
                     socket.send(packet);
                     byteArrayOutputStream.reset();
 //                    LOG.log(Level.INFO, () -> "[" + delayId + "] " + Protocol.DELAY_REQUEST + " sent");
@@ -209,7 +209,7 @@ public class Client {
 //                        LOG.log(Level.INFO, () -> "[" + drId + "] " + Protocol.DELAY_RESPONSE + " received");
                         if (drId == delayId) { // id verification
                             long masterTime = dataInputStream.readLong();
-                            delay = (masterTime - timeOfDelayRequest)/2;
+                            delay = (masterTime - localTimeOfDelayRequest)/2;
                             LOG.log(Level.INFO, () -> "[" + delayId +"] delay: " + delay);
                             firstDelayCalculated = true;
                         }
