@@ -128,7 +128,7 @@ public class Client {
                             // the local time is displayed after the first delay is calculated
                             if (firstDelayCalculated) {
                                 long resultTime = systemTime + gap + delay;
-                                LOG.log(Level.INFO, () -> "[" + syncId + "] LOCAL TIME: " + resultTime);
+                                LOG.log(Level.INFO, () -> "[" + syncId + "] LOCAL TIME: " + resultTime + "\n");
                             }
                         }
                     } else {
