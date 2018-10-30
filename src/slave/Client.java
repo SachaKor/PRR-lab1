@@ -123,7 +123,7 @@ public class Client {
                             // FOLLOW_UP message is received
                             if (!firstFollowUpReceived) {
                                 firstFollowUpReceived = true;
-                                new Thread(new DelayRequestSender()).start();
+                                new Thread(new DelayRequestSender(packet.getAddress())).start();
                             }
                             // the local time is displayed after the first delay is calculated
                             if (firstDelayCalculated) {
@@ -165,12 +165,12 @@ public class Client {
         /**
          * Constructor
          */
-        DelayRequestSender() {
+        DelayRequestSender(InetAddress serverAddress) {
             random = new Random();
             try {
                 socket = new DatagramSocket();
-                serverAddress = InetAddress.getLocalHost();
-            } catch (SocketException | UnknownHostException e) {
+                this.serverAddress = serverAddress;
+            } catch (SocketException e) {
                 LOG.log(Level.SEVERE, e.getMessage(), e);
             }
         }
