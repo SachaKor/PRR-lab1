@@ -74,7 +74,6 @@ public class Client {
     private class SyncListener implements Runnable {
 
         private MulticastSocket socket;
-        private long masterTime;
         private boolean shouldRun = true;
         private long syncId = -1;
         private int port = 4445;
@@ -94,6 +93,7 @@ public class Client {
 
         @Override
         public void run() {
+            long masterTime;
             boolean firstFollowUpReceived = false;
             byte[] buffer = new byte[BUFFER_SIZE];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
